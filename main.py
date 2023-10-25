@@ -9,7 +9,7 @@ app = FastAPI()
 async def root():
     response = g4f.ChatCompletion.create(
         model=g4f.models.gpt_4,
-        messages=[{"role": "user", "content": "Привет, какой сегодня праздник в России?"}],
+        messages=[{"role": "user", "content": "What is the holiday in Russia today?"}],
     )
 
     return {"message": response}
