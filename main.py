@@ -7,6 +7,7 @@ import os
 app = FastAPI()
 load_dotenv()
 
+
 @app.get("/")
 async def root():
     # response = g4f.ChatCompletion.create(
@@ -19,5 +20,4 @@ async def root():
 
 
 if __name__ == '__main__':
-
     pass
