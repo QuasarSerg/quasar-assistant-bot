@@ -1,1 +1,1 @@
-# quasar-bot-assistant
+# quasar-assistant-bot
