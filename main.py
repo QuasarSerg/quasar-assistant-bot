@@ -7,7 +7,7 @@ from fastapi import FastAPI
 app = FastAPI()
 load_dotenv()
 
-bot = telebot.TeleBot(os.getenv('TELEGRAM_BOT_API_TOKEN'))
+bot = telebot.TeleBot(os.getenv('TELEGRAM_BOT_API_TOKEN'), threaded=False)
 
 bot.set_my_commands([
     telebot.types.BotCommand("/info", 'Справка')
