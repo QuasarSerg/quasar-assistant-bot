@@ -10,13 +10,20 @@ from aiogram.filters import CommandStart
 from aiogram.types import Message
 from aiogram.utils.markdown import hbold
 from dotenv import load_dotenv
+from fastapi import FastAPI
 
+app = FastAPI()
 load_dotenv()
 # Bot token can be obtained via https://t.me/BotFather
 TOKEN = getenv('TELEGRAM_BOT_API_TOKEN')
 
 # All handlers should be attached to the Router (or Dispatcher)
 dp = Dispatcher()
+
+
+@app.get("/")
+async def root():
+    return {"message": "👋"}
 
 
 @dp.message(CommandStart())
