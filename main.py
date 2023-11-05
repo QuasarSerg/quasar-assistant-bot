@@ -37,14 +37,19 @@ async def echo_handler(message: Message) -> None:
             model=g4f.models.default,
             messages=[{"role": "user", "content": message.text}]
         )
-        await message.answer(response)
+        if response == "":
+            answer = "No response received. Please try again"
+        else:
+            answer = response
+
+        await message.answer(answer)
     except TypeError:
         await message.answer("Nice try!")
 
 
 def get_commands():
     return [
-        BotCommand(command='info', description='Справка')
+        BotCommand(command="info", description="Справка")
     ]
 
 
