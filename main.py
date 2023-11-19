@@ -6,7 +6,7 @@ import g4f
 from dotenv import load_dotenv
 from os import getenv
 from aiogram import Bot, Dispatcher
-from aiogram.enums import ParseMode
+from aiogram.enums import ParseMode, ChatAction
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Message, BotCommand, BotCommandScopeDefault
 from aiogram.utils.markdown import hbold
@@ -32,19 +32,24 @@ async def command_start_handler(message: Message) -> None:
 
 @dp.message()
 async def echo_handler(message: Message) -> None:
+    await message.bot.send_chat_action(chat_id=message.chat.id, action=ChatAction.TYPING)
     try:
+        messages = []
+        if message.reply_to_message:
+            messages.append({"role": "assistant", "content": message.reply_to_message.text})
+        if message.text:
+            messages.append({"role": "user", "content": message.text})
         response = await g4f.ChatCompletion.create_async(
             model=g4f.models.default,
-            messages=[{"role": "user", "content": message.text}]
+            messages=messages
         )
         if response == "":
             answer = "No response received. Please try again"
         else:
             answer = response
-
-        await message.answer(answer)
+        await message.reply(answer)
     except TypeError:
-        await message.answer("Nice try!")
+        await message.reply("Nice try!")
 
 
 def get_commands():
